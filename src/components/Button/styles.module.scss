@@ -1,0 +1,25 @@
+.container {
+  height: 20px;
+  width: 345px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffc1cc;
+
+  border-radius: 8px;
+
+  padding-inline: 14px;
+  padding-block: 12px;
+
+  transition: background-color 0.1s ease-in-out;
+
+  &:active {
+    background-color: #e9bcc4;
+  }
+
+  .text {
+    color: white;
+  }
+}
