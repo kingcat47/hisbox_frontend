@@ -1,10 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "./App.css";
+import BottomBar from "./components/Bottombar";
+import styles from "./App.module.scss";
 
 function App() {
+  const location = useLocation();
+
+  const isLogin = location.pathname != "/signin" || "/signup";
   return (
     <>
-      <Outlet />
+      <div className={styles.container}>
+        <Outlet />
+        {/* {isLogin && <BottomBar />} */}
+      </div>
     </>
   );
 }

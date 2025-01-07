@@ -1,9 +1,58 @@
 import { InputComponent } from "../../components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+import { MusicComponents } from "../../components/MusicBox";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "axios";
+import MusicItem from "../../entity/music-entity";
 
 export const First_page = () => {
+  const navigate = useNavigate();
   const [serch_title, setSerch_title] = useState("");
+  const [music, setMusic] = useState<MusicItem[]>([]);
+  const [hmake, setHmake] = useState(0);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+
+    const fetchMusic = async () => {
+      try {
+        const req = await axiosInstance.get("/musics/getall", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (req.data) {
+          console.log("Music data:", req.data);
+          console.log("Music data:", req);
+          setMusic(req.data);
+          setHmake((prev) => prev + 1);
+        }
+      } catch (error) {
+        console.error("Failed to fetch music:", error);
+      }
+    };
+
+    fetchMusic();
+  }, []);
+
+  const printmusic =
+    Array.isArray(music) && music.length >= 0 ? (
+      music.map((i: MusicItem) => (
+        <MusicComponents
+          key={i.id} // unique key 추가
+          title={i.title}
+          link={i.link}
+          onClick={() => navigate(`/more/:${i.id}`)}
+        />
+      ))
+    ) : (
+      <div>음악을 추가하세요</div>
+    );
+
   return (
     <>
       <div className={styles.container}>
@@ -16,11 +65,9 @@ export const First_page = () => {
             }}
           />
           <div className={styles.selectionzon}>선택하는곳</div>
-          <div className={styles.main}>음악목록 나오는곳</div>
-          <p>음악추가버튼도 필요</p>
+          <div className={styles.main}>{printmusic}</div>
         </div>
       </div>
-      <h1>First Page</h1>
     </>
   );
 };

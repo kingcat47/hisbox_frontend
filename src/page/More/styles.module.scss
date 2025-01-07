@@ -1,0 +1,13 @@
+.container {
+  height: calc(100% - 30px);
+  border-radius: 20px;
+
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin: 10px 20px 20px 20px;
+}
