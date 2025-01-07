@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InputComponent } from "../../components/Input";
 import styles from "./styles.module.scss";
 import { ButtonComponent } from "../../components/Button";
-import axiosInstance from "axios";
+import axiosInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 export const AddMusic_Page = () => {
@@ -23,11 +23,7 @@ export const AddMusic_Page = () => {
         alert("채워");
         return;
       }
-      const req = await axiosInstance.get("/musics", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const req = await axiosInstance.get("/musics");
       console.log(req.data);
       setTitle("");
       setLink("");

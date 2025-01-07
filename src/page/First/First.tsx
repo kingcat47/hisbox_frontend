@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { MusicComponents } from "../../components/MusicBox";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "axios";
+import axiosInstance from "../../utils/axios";
 import MusicItem from "../../entity/music-entity";
 
 export const First_page = () => {
   const navigate = useNavigate();
   const [serch_title, setSerch_title] = useState("");
   const [music, setMusic] = useState<MusicItem[]>([]);
-  const [hmake, setHmake] = useState(0);
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -20,16 +20,11 @@ export const First_page = () => {
 
     const fetchMusic = async () => {
       try {
-        const req = await axiosInstance.get("/musics/getall", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const req = await axiosInstance.get("/musics/getall");
         if (req.data) {
           console.log("Music data:", req.data);
           console.log("Music data:", req);
           setMusic(req.data);
-          setHmake((prev) => prev + 1);
         }
       } catch (error) {
         console.error("Failed to fetch music:", error);

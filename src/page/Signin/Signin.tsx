@@ -5,7 +5,7 @@ import { ButtonComponent } from "../../components/Button";
 import SvgIcon from "../../components/SvgIcon";
 import PinkIcon from "../../assets/Icon/pink.svg";
 import { ReactSVG } from "react-svg";
-import axios from "axios";
+import { axiosInstance } from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 export const SignIn_page = () => {
@@ -21,7 +21,7 @@ export const SignIn_page = () => {
         return;
       }
 
-      const req = await axios.post("http://localhost:3000/user/signin", {
+      const req = await axiosInstance.post("/user/signin", {
         id: id,
         password: password,
       });
@@ -65,7 +65,7 @@ export const SignIn_page = () => {
           className={styles.button}
           text={"로그인"}
           onClick={() => {
-            signInUser;
+            signInUser();
           }}
         ></ButtonComponent>
         <ButtonComponent

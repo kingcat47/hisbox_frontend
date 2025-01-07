@@ -2,10 +2,11 @@ import axios from "axios";
 
 const timeout = 15000;
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
   },
   timeout,
 });
